@@ -1,9 +1,10 @@
-const todosOperations = require("../../models/todos/todos");
+const { Todo } = require("../../models");
 
 const getTodoById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const result = await todosOperations.getTodoById(id);
+    // const result = await Todo.findOne({ _id: id });
+    const result = await Todo.findById(id);
 
     if (!result) {
       const error = new Error(`Todo with id=${id} not found`);

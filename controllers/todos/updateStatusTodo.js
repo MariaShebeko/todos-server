@@ -1,16 +1,21 @@
 const { Todo } = require("../../models");
-const { joiTodoSchema } = require("../../models/todo");
+const { joiStatusTodoSchema } = require("../../models/todo");
 
-const updateTodo = async (req, res, next) => {
+const updateStatusTodo = async (req, res, next) => {
   try {
-    const { error } = joiTodoSchema.validate(req.body);
+    const { error } = joiStatusTodoSchema.validate(req.body);
     if (error) {
       error.status = 400;
       throw error;
     }
 
     const { id } = req.params;
-    const result = await Todo.findByIdAndUpdate(id, req.body, { new: true });
+    const { isCompleted } = req.body;
+    const result = await Todo.findByIdAndUpdate(
+      id,
+      { isCompleted },
+      { new: true }
+    );
 
     if (!result) {
       const error = new Error(`Todo with id=${id} not found`);
@@ -30,4 +35,4 @@ const updateTodo = async (req, res, next) => {
   }
 };
 
-module.exports = updateTodo;
+module.exports = updateStatusTodo;

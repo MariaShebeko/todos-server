@@ -1,8 +1,8 @@
-const todosOperations = require("../../models/todos/todos");
+const { Todo } = require("../../models");
 
 const getAllTodos = async (req, res, next) => {
   try {
-    const todos = await todosOperations.getAllTodos();
+    const todos = await Todo.find({});
     res.json({
       status: "sucess",
       code: 200,
