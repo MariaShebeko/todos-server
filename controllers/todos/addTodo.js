@@ -1,15 +1,15 @@
-const todosOperations = require("../../models/todos/todos");
-const todoSchema = require("../../schemas/todos");
+const { Todo } = require("../../models");
+const { joiTodoSchema } = require("../../models/todo");
 
 const addTodo = async (req, res, next) => {
   try {
-    const { error } = todoSchema.validate(req.body);
+    const { error } = joiTodoSchema.validate(req.body);
     if (error) {
       error.status = 400;
       throw error;
     }
 
-    const result = await todosOperations.addTodo(req.body);
+    const result = await Todo.create(req.body);
     res.status(201).json({
       status: "sucess",
       code: 201,

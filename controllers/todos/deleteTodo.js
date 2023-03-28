@@ -1,9 +1,9 @@
-const todosOperations = require("../../models/todos/todos");
+const { Todo } = require("../../models");
 
 const deleteTodo = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const result = await todosOperations.deleteTodo(id);
+    const result = await Todo.findByIdAndRemove(id);
 
     if (!result) {
       const error = new Error(`Todo with id=${id} not found`);

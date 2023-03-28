@@ -1,8 +1,8 @@
 const express = require("express");
-const moment = require("moment/moment");
 const logger = require("morgan");
-const fs = require("fs/promises");
 const cors = require("cors");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const todosRouter = require("./routes/api/todos");
 
@@ -19,18 +19,6 @@ app.use(express.json());
 
 app.use("/api/todos", todosRouter);
 
-// Middleware to show request and time
-// app.use(async (req, res, next) => {
-//   const { method, url } = req;
-//   const date = moment().format("DD-MM-YYYY_hh:mm:ss");
-//   await fs.appendFile("server.log", `\n${method} ${url} ${date}`);
-//   next();
-// });
-
-// app.get("/", (req, res) => {
-//   res.send("Hello World");
-// });
-
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
 });
@@ -40,4 +28,4 @@ app.use((err, req, res, next) => {
   res.status(status).json({ status: err.status, message: err.message });
 });
 
-app.listen(3001, () => console.log("Server running"));
+module.exports = app;
